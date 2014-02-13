@@ -214,6 +214,10 @@ class BaseSecurity
 				return substr($key, 0, $length);
 			}
 		}
+		if (function_exists('mcrypt_create_iv')) {
+			$key = strtr(base64_encode(mcrypt_create_iv($length, MCRYPT_DEV_URANDOM), '+/=', '_-.');
+			return substr($key, 0, $length);
+		}
 		$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-.';
 		return substr(str_shuffle(str_repeat($chars, 5)), 0, $length);
 	}
